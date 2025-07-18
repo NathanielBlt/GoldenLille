@@ -1,0 +1,34 @@
+// Variables
+$primary-color: #007bff;
+$font-stack: 'Helvetica Neue', sans-serif;
+
+// Reset minimal
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// Mobile-first base
+body {
+  font-family: $font-stack;
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 1rem;
+}
+
+h1 {
+  color: $primary-color;
+  font-size: 1.5rem;
+}
+
+// Responsive breakpoint
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  body {
+    padding: 2rem;
+  }
+}
