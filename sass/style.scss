@@ -1,34 +1,37 @@
-// Variables
-$primary-color: #007bff;
-$font-stack: 'Helvetica Neue', sans-serif;
-
-// Reset minimal
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-// Mobile-first base
 body {
-  font-family: $font-stack;
-  background-color: #f9f9f9;
-  color: #333;
-  padding: 1rem;
-}
-
-h1 {
-  color: $primary-color;
-  font-size: 1.5rem;
-}
-
-// Responsive breakpoint
-@media (min-width: 768px) {
-  h1 {
-    font-size: 2rem;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 1rem;
+    background: #fdfdfd;
+    color: #222;
   }
-
-  body {
-    padding: 2rem;
+  
+  header, nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
   }
-}
+  
+  a {
+    color: #007acc;
+    text-decoration: none;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid #007acc;
+    border-radius: 5px;
+    color: #007acc;
+    background: transparent;
+    cursor: pointer;
+  }
+  
+  .pin {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: url('../img/icone-epingle.svg') no-repeat center/contain;
+  }
+  

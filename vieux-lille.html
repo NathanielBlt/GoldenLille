@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="vieux_lille"></title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav>
+    <a href="index.html" data-i18n="home"></a> › <span data-i18n="vieux_lille"></span>
+    <button id="lang-toggle">EN</button>
+  </nav>
+
+  <main>
+    <h1 data-i18n="map_title"></h1>
+    <div class="carte">
+      <!-- svg map -->
+      <object type="image/svg+xml" data="img/carte-vieux-lille.svg"></object>
+
+      <!-- pins - WIP -->
+      <div class="pins">
+        <a href="locations/pont-napoleon.html" class="pin" style="top: 30%; left: 50%;" title="Pont Napoléon"></a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/lang.js"></script>
+</body>
+</html>

@@ -3,22 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Projet Mobile</title>
+  <title>Golden Lille</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header>
-    <h1>Golden Lille</h1>
+    <button id="lang-toggle" aria-label="Switch language">EN</button>
+    <h1 data-i18n="title"></h1>
   </header>
 
   <main>
-    <section>
-      <p>Initiating project</p>
+    <p data-i18n="intro"></p>
+
+    <section class="quartiers">
+      <h2 data-i18n="choose_area"></h2>
+      <a href="vieux-lille.html" class="btn" data-i18n="vieux_lille"></a>
     </section>
+
+    <section class="about">
+      <a href="#" id="about-btn" data-i18n="about"></a>
+      <div id="about-box" class="hidden">
+        <p data-i18n="about_text"></p>
+      </div>
+    </section>
+
+    <footer>
+      <a href="#" data-i18n="resources"></a>
+    </footer>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Balthazarn</p>
-  </footer>
+  <script src="js/data.js"></script>
+  <script src="js/lang.js"></script>
 </body>
 </html>
