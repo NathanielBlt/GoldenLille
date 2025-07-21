@@ -1,24 +1,36 @@
-
-  
-
-  
-  .pin {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    background: url('../img/pin.svg') no-repeat center/contain;
-  }
-  
 // Golden Lille
 // Project by Nathaniel Burlot "Balthazarn"
 // Creative Commons - CC BY SA
 
+// --------------------------------------------------
+// Various infos
+
+// Google font possible properties
+/*   font-family: "Fraunces", serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+  font-variation-settings:
+    "SOFT" 0,
+    "WONK" 1; */
+
+// Breakpoints
+
+
+// --------------------------------------------------
 // Root
-
 :root {
-// Setup
-  --border-color: rgba(0, 0, 0, 1);
+  --border-color: rgba(11, 10, 11, 1);
+  --mainframe-background-rgb: 255, 255, 255;
+  --background-color-rgb: 227,216,131;
+  --background-color-rgb-dark: 11, 10, 11;
+  --background-color-hexa: #E3D8B5;
+  --background-color-hexa-dark:#0B0A0B;
 
+  &.dark {
+    --background-color-rgb: var(--background-color-rgb-dark);
+    --background-color-hexa: var(--background-color-hexa-dark);
+  }
 }
 
 // html
@@ -28,42 +40,92 @@
 }
 
 body {
-    font-family: serif;
+    font-family: "Fraunces", serif;
     margin: 0;
     padding: 1rem;
     width: 100vw;
     height: 100vh;
+    background: rgba(var(--background-color), 1);
+    background-image: url("../img/lillemap_light.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    &.dark {background-image: url("../img/lillemap_dark.svg");}
   }
   
-  
   a {
-    color: #007acc;
+    //color: #007acc;
     text-decoration: underline;
   }
 
+// --------------------------------------------------
 // Structure
+
+// .wrapper = .topbar + .header + .main + .footer
 
 .wrapper {
   display: grid;
+  // Structure for all pages
+  grid-template-areas: "topbar"
+  "header"
+  "main" 
+  "footer";
+  // Basic space spreading
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content auto min-content min-content;
   height: 100%;
   padding: 1rem;
   border: solid 2px var(--border-color);
   border-radius: 1rem;
-  background:ivory;
+  background: rgba(var(--mainframe-background-rgb),0.8);
+  justify-items: start;
+  justify-content: left;
+
+  @media screen and (min-width:968px) {
+    
+  }
+
 }
 
+// For home only
 .wrapper--home {
+  grid-template-areas: "topbar"
+  "main"
+  "header"
+  "footer";
+
   justify-items: center;
   justify-content: center;
 }
 
 .topbar {
+  order: 0;
+  grid-area: topbar;
   justify-self: end;
 }
 
 .header { 
+  order: 2;
+  grid-area: header;
   display: flex;
   flex-direction: column;
+}
+
+.main {
+  order:1;
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer {
+  order: 9;
+  grid-area: footer;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
 }
 
 // Objects
@@ -76,4 +138,26 @@ body {
     color: #007acc;
     background: transparent;
     cursor: pointer;
+  }
+
+// District pages 
+
+.carte {
+  width: 100%;
+  max-width: 800px; // ou ce que tu veux
+  margin: 0 auto;
+
+  object {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+
+  .pin {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: url('../img/pin.svg') no-repeat center/contain;
   }

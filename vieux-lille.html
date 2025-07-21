@@ -5,25 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title data-i18n="vieux_lille"></title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,WONK@0,9..144,100..900,1;1,9..144,100..900,1&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <nav>
-    <a href="index.html" data-i18n="home"></a> › <span data-i18n="vieux_lille"></span>
-    <button id="lang-toggle">EN</button>
-  </nav>
+  <div class="wrapper">
 
-  <main>
-    <h1 data-i18n="map_title"></h1>
-    <div class="carte">
-      <!-- svg map -->
-      <object type="image/svg+xml" data="img/carte-vieux-lille.svg"></object>
-
-      <!-- pins - WIP -->
-      <div class="pins">
-        <a href="locations/pont-napoleon.html" class="pin" style="top: 30%; left: 50%;" title="Pont Napoléon"></a>
-      </div>
+    <!-- Bouton de langue -->
+    <div class="topbar">
+      <button class="btn" id="lang-toggle" aria-label="Switch language">EN</button>
     </div>
-  </main>
+
+    <!-- Titre principal -->
+    <header class="header">
+      <h1 data-i18n="map_title">Vieux Lille</h1>
+      <nav class="breadcrumbs">
+        <a href="index.html" data-i18n="home"></a> › 
+        <span data-i18n="vieux_lille"></span>
+      </nav>
+    </header>
+
+    <!-- Fil d'ariane + carte -->
+    <main class="main">
+      <div class="carte">
+       <object type="image/svg+xml" data="img/carte-vieux-lille.svg"></object>
+
+
+
+        <div class="pins">
+          <a href="locations/pont-napoleon.html" class="pin" style="top: 30%; left: 50%;" title="Pont Napoléon"></a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <a class="btn" href="#" id="about-btn" data-i18n="about">À propos</a>
+      <a class="btn" href="#" data-i18n="resources">Ressources</a>
+    </footer>
+
+  </div>
 
   <script src="js/data.js"></script>
   <script src="js/lang.js"></script>
