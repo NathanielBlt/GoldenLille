@@ -72,7 +72,7 @@ body {
   "footer";
   // Basic space spreading
   grid-template-columns: 1fr;
-  grid-template-rows: min-content auto min-content min-content;
+  grid-template-rows: min-content min-content 1fr min-content;
   height: 100%;
   padding: 1rem;
   border: solid 2px var(--border-color);
@@ -93,7 +93,7 @@ body {
   "main"
   "header"
   "footer";
-
+  grid-template-rows: min-content auto min-content min-content;
   justify-items: center;
   justify-content: center;
 }
@@ -144,12 +144,12 @@ body {
 
 .carte {
   width: 100%;
-  max-width: 800px; // ou ce que tu veux
   margin: 0 auto;
+  height: 100%;
 
-  object {
-    width: 100%;
-    height: auto;
+  & img {
+    //width: 100%;
+    height: 100%;
     display: block;
   }
 }
