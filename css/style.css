@@ -1,36 +1,60 @@
-body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 1rem;
-  background: #fdfdfd;
-  color: #222;
+.pin {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: url("../img/pin.svg") no-repeat center/contain;
 }
 
-header, nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
+:root {
+  --border-color: rgba(0, 0, 0, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: serif;
+  margin: 0;
+  padding: 1rem;
+  width: 100vw;
+  height: 100vh;
 }
 
 a {
   color: #007acc;
-  text-decoration: none;
+  text-decoration: underline;
+}
+
+.wrapper {
+  display: grid;
+  height: 100%;
+  padding: 1rem;
+  border: solid 2px var(--border-color);
+  border-radius: 1rem;
+  background: ivory;
+}
+
+.wrapper--home {
+  justify-items: center;
+  justify-content: center;
+}
+
+.topbar {
+  justify-self: end;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
 }
 
 .btn {
   display: inline-block;
   padding: 0.5rem 1rem;
-  border: 1px solid #007acc;
+  border: 1px solid var(--border-color);
   border-radius: 5px;
   color: #007acc;
   background: transparent;
   cursor: pointer;
-}
-
-.pin {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  background: url("../img/icone-epingle.svg") no-repeat center/contain;
 }

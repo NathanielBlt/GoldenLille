@@ -1,7 +1,6 @@
 window.translations = {
     en: {
-      title: "Welcome to Golden Lille",
-      intro: "Explore Lille through an artistic, historical and mysterious lens.",
+      title: "Golden Lille",
       choose_area: "Choose a district",
       vieux_lille: "Old Lille",
       about: "About the project",
@@ -13,8 +12,7 @@ window.translations = {
       pont_napoleon_story: "The Napoleon Bridge is a historic bridge built during the 19th century to honor Emperor Napoleon."
     },
     fr: {
-      title: "Bienvenue à Golden Lille",
-      intro: "Explorez Lille à travers un prisme artistique, historique et mystérieux.",
+      title: "Golden Lille",
       choose_area: "Choisissez un quartier",
       vieux_lille: "Vieux Lille",
       about: "À propos du projet",
@@ -26,8 +24,7 @@ window.translations = {
       pont_napoleon_story: "Le pont Napoléon est un pont historique construit au XIXe siècle en hommage à l’empereur Napoléon."
     },
     nl: {
-      title: "Welkom bij Golden Lille",
-      intro: "Ontdek Lille via een artistiek, historisch en mysterieus perspectief.",
+      title: "Golden Lille",
       choose_area: "Kies een wijk",
       vieux_lille: "Oud Lille",
       about: "Over het project",
