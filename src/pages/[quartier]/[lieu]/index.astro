@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import LieuPage from '../../../components/pages/LieuPage.astro';
+
+export async function getStaticPaths() {
+  const lieux = await getCollection('lieux', (entry) => entry.id.startsWith('en/'));
+  return lieux.map((entry) => ({
+    params: { quartier: entry.data.quartier, lieu: entry.id.split('/')[1] },
+  }));
+}
+
+const { quartier, lieu } = Astro.params;
+---
+
+<LieuPage lang="en" quartierSlug={quartier} lieuSlug={lieu} />

@@ -1,0 +1,26 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  path?: string;
+}
+
+const { lang, path = '' } = Astro.props;
+const locales: Lang[] = ['en', 'fr', 'nl'];
+---
+
+<nav class="lang-switcher" aria-label="Language">
+  {
+    locales.map((l) => (
+      <a
+        href={getRelativeLocaleUrl(l, path)}
+        class="btn lang-switcher__link"
+        aria-current={l === lang ? 'page' : undefined}
+      >
+        {l.toUpperCase()}
+      </a>
+    ))
+  }
+</nav>

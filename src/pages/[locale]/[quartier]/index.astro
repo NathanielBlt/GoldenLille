@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import QuartierPage from '../../../components/pages/QuartierPage.astro';
+import type { Lang } from '../../../i18n/utils';
+
+export async function getStaticPaths() {
+  const locales: Exclude<Lang, 'en'>[] = ['fr', 'nl'];
+  const quartiers = await getCollection('quartiers');
+
+  return locales.flatMap((locale) =>
+    quartiers
+      .filter((entry) => entry.id.startsWith(`${locale}/`))
+      .map((entry) => ({
+        params: { locale, quartier: entry.id.split('/')[1] },
+      })),
+  );
+}
+
+const { locale, quartier } = Astro.params as { locale: Lang; quartier: string };
+---
+
+<QuartierPage lang={locale} quartierSlug={quartier} />

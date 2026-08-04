@@ -1,0 +1,56 @@
+---
+import { getEntry, render } from 'astro:content';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import { useTranslations, type Lang } from '../../i18n/utils';
+import { withBase } from '../../utils/base';
+import { moodColors } from '../../utils/mood';
+
+interface Props {
+  lang: Lang;
+  quartierSlug: string;
+  lieuSlug: string;
+}
+
+const { lang, quartierSlug, lieuSlug } = Astro.props;
+const t = useTranslations(lang);
+
+const quartier = await getEntry('quartiers', `${lang}/${quartierSlug}`);
+const lieu = await getEntry('lieux', `${lang}/${lieuSlug}`);
+const { Content } = await render(lieu!);
+
+const accent = moodColors[lieu!.data.mood ?? quartier!.data.accent];
+const theme = { from: quartier!.data.themeFrom, to: quartier!.data.themeTo, accent };
+---
+
+<BaseLayout lang={lang} title={lieu!.data.title} theme={theme}>
+  <Header
+    slot="header"
+    lang={lang}
+    path={`${quartierSlug}/${lieuSlug}`}
+    title={lieu!.data.title}
+    kicker={lieu!.data.kicker}
+    breadcrumbs={[
+      { label: t('home'), href: getRelativeLocaleUrl(lang, '') },
+      { label: quartier!.data.title, href: getRelativeLocaleUrl(lang, quartierSlug) },
+      { label: lieu!.data.title },
+    ]}
+  />
+
+  <figure class="lieu-photo" style={`--mood-accent: ${accent}`}>
+    <img src={withBase(`img/${lieu!.data.photo}`)} alt={lieu!.data.title} />
+    <figcaption>{lieu!.data.caption}</figcaption>
+  </figure>
+
+  <div class="prose">
+    <Content />
+  </div>
+
+  <Footer
+    slot="footer"
+    howItWorksHref={getRelativeLocaleUrl(lang, 'comment-ca-marche')}
+    howItWorksLabel={t('how_it_works')}
+  />
+</BaseLayout>

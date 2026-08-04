@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import QuartierPage from '../../components/pages/QuartierPage.astro';
+
+export async function getStaticPaths() {
+  const quartiers = await getCollection('quartiers', (entry) => entry.id.startsWith('en/'));
+  return quartiers.map((quartier) => ({
+    params: { quartier: quartier.id.split('/')[1] },
+  }));
+}
+
+const { quartier } = Astro.params;
+---
+
+<QuartierPage lang="en" quartierSlug={quartier} />

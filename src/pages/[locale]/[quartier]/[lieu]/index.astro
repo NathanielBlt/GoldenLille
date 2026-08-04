@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import LieuPage from '../../../../components/pages/LieuPage.astro';
+import type { Lang } from '../../../../i18n/utils';
+
+export async function getStaticPaths() {
+  const locales: Exclude<Lang, 'en'>[] = ['fr', 'nl'];
+  const lieux = await getCollection('lieux');
+
+  return locales.flatMap((locale) =>
+    lieux
+      .filter((entry) => entry.id.startsWith(`${locale}/`))
+      .map((entry) => ({
+        params: { locale, quartier: entry.data.quartier, lieu: entry.id.split('/')[1] },
+      })),
+  );
+}
+
+const { locale, quartier, lieu } = Astro.params as { locale: Lang; quartier: string; lieu: string };
+---
+
+<LieuPage lang={locale} quartierSlug={quartier} lieuSlug={lieu} />

@@ -1,0 +1,204 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import Pin from '../Pin.astro';
+import AllPlacesDialog from '../AllPlacesDialog.astro';
+import PlaceTeaserDialog from '../PlaceTeaserDialog.astro';
+import { useTranslations, type Lang } from '../../i18n/utils';
+import { withBase } from '../../utils/base';
+import { moodColors } from '../../utils/mood';
+
+interface Props {
+  lang: Lang;
+  quartierSlug: string;
+}
+
+const { lang, quartierSlug } = Astro.props;
+const t = useTranslations(lang);
+
+const quartier = await getEntry('quartiers', `${lang}/${quartierSlug}`);
+const lieux = await getCollection(
+  'lieux',
+  (entry) => entry.id.startsWith(`${lang}/`) && entry.data.quartier === quartierSlug,
+);
+
+const theme = {
+  from: quartier!.data.themeFrom,
+  to: quartier!.data.themeTo,
+  accent: moodColors[quartier!.data.accent],
+};
+
+const lieuxData = lieux.map((lieu) => {
+  const slug = lieu.id.split('/')[1];
+  return {
+    id: slug,
+    title: lieu.data.title,
+    kicker: lieu.data.kicker,
+    teaser: lieu.data.teaser,
+    photo: withBase(`img/${lieu.data.photo}`),
+    href: getRelativeLocaleUrl(lang, `${quartierSlug}/${slug}`),
+    top: lieu.data.pin.top,
+    left: lieu.data.pin.left,
+    accent: moodColors[lieu.data.mood ?? quartier!.data.accent],
+  };
+});
+// Defensive: JSON.stringify won't escape "</script>" on its own.
+const lieuxJson = JSON.stringify(lieuxData).replace(/</g, '\\u003c');
+---
+
+<BaseLayout lang={lang} title={quartier!.data.title} theme={theme}>
+  <Header
+    slot="header"
+    lang={lang}
+    path={quartierSlug}
+    title={quartier!.data.title}
+    breadcrumbs={[{ label: t('home'), href: getRelativeLocaleUrl(lang, '') }, { label: quartier!.data.title }]}
+  />
+
+  <p class="tagline">{quartier!.data.tagline}</p>
+
+  <div class="carte" id="carte-viewport">
+    <div class="carte-inner" id="carte-inner">
+      <img src={withBase(`img/${quartier!.data.mapImage}`)} alt={quartier!.data.title} />
+      <div class="pins">
+        {
+          lieux.map((lieu) => {
+            const slug = lieu.id.split('/')[1];
+            return (
+              <Pin
+                href={getRelativeLocaleUrl(lang, `${quartierSlug}/${slug}`)}
+                lieuId={slug}
+                top={lieu.data.pin.top}
+                left={lieu.data.pin.left}
+                title={lieu.data.title}
+              />
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="carte-toolbar">
+    <p class="carte-hint">{t('map_hint')}</p>
+    <button type="button" class="btn" data-open-all-places>{t('all_places')}</button>
+  </div>
+
+  <AllPlacesDialog heading={t('all_places')} description={t('all_places_description')} lieux={lieuxData} />
+  <PlaceTeaserDialog ctaLabel={t('view_full_card')} />
+
+  <script type="application/json" id="lieux-data" set:html={lieuxJson} is:inline />
+
+  <Footer
+    slot="footer"
+    howItWorksHref={getRelativeLocaleUrl(lang, 'comment-ca-marche')}
+    howItWorksLabel={t('how_it_works')}
+  />
+</BaseLayout>
+
+<script>
+  import Panzoom from '@panzoom/panzoom';
+
+  interface LieuDatum {
+    id: string;
+    title: string;
+    kicker: string;
+    teaser: string;
+    photo: string;
+    href: string;
+    top: number;
+    left: number;
+    accent: string;
+  }
+
+  const dataEl = document.getElementById('lieux-data');
+  const lieux: LieuDatum[] = dataEl ? JSON.parse(dataEl.textContent ?? '[]') : [];
+  const byId = new Map(lieux.map((l) => [l.id, l]));
+
+  const viewport = document.getElementById('carte-viewport');
+  const inner = document.getElementById('carte-inner');
+
+  if (viewport && inner) {
+    const panzoom = Panzoom(inner, {
+      origin: '0 0',
+      contain: 'outside',
+      minScale: 1,
+      maxScale: 4,
+      cursor: 'grab',
+    });
+    viewport.addEventListener('wheel', panzoom.zoomWithWheel);
+
+    function focusPin(id: string) {
+      const lieu = byId.get(id);
+      if (!lieu || !viewport) return;
+      const rect = viewport.getBoundingClientRect();
+      const scale = 2.2;
+      const px = (lieu.left / 100) * rect.width;
+      const py = (lieu.top / 100) * rect.height;
+      const x = rect.width / 2 - px * scale;
+      const y = rect.height / 2 - py * scale;
+      panzoom.zoom(scale, { animate: false, force: true });
+      panzoom.pan(x, y, { animate: true, force: true });
+    }
+
+    const teaserDialog = document.getElementById('place-teaser-dialog') as HTMLDialogElement | null;
+
+    function openTeaser(id: string) {
+      const lieu = byId.get(id);
+      if (!lieu || !teaserDialog) return;
+      const photo = teaserDialog.querySelector<HTMLImageElement>('[data-teaser-photo]');
+      const kicker = teaserDialog.querySelector('[data-teaser-kicker]');
+      const title = teaserDialog.querySelector('[data-teaser-title]');
+      const text = teaserDialog.querySelector('[data-teaser-text]');
+      const cta = teaserDialog.querySelector<HTMLAnchorElement>('[data-teaser-cta]');
+      if (photo) {
+        photo.src = lieu.photo;
+        photo.alt = lieu.title;
+      }
+      if (kicker) kicker.textContent = lieu.kicker;
+      if (title) title.textContent = lieu.title;
+      if (text) text.textContent = lieu.teaser;
+      if (cta) cta.href = lieu.href;
+      teaserDialog.style.setProperty('--mood-accent', lieu.accent);
+      teaserDialog.showModal();
+    }
+
+    document.querySelectorAll<HTMLAnchorElement>('.pin').forEach((pin) => {
+      pin.addEventListener('click', (event) => {
+        event.preventDefault();
+        const id = pin.dataset.lieu;
+        if (!id) return;
+        focusPin(id);
+        openTeaser(id);
+      });
+    });
+
+    const allPlacesDialog = document.getElementById('all-places-dialog') as HTMLDialogElement | null;
+    document.querySelector('[data-open-all-places]')?.addEventListener('click', () => {
+      allPlacesDialog?.showModal();
+    });
+
+    allPlacesDialog?.querySelectorAll<HTMLButtonElement>('[data-lieu-trigger]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.lieuTrigger;
+        if (!id) return;
+        allPlacesDialog.close();
+        focusPin(id);
+        openTeaser(id);
+      });
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('[data-dialog-close]').forEach((btn) => {
+      btn.addEventListener('click', () => btn.closest('dialog')?.close());
+    });
+
+    [allPlacesDialog, teaserDialog].forEach((dialog) => {
+      dialog?.addEventListener('click', (event) => {
+        if (event.target === dialog) dialog.close();
+      });
+    });
+  }
+</script>

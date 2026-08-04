@@ -1,0 +1,33 @@
+---
+interface LieuSummary {
+  id: string;
+  title: string;
+  teaser: string;
+}
+
+interface Props {
+  heading: string;
+  description: string;
+  lieux: LieuSummary[];
+}
+
+const { heading, description, lieux } = Astro.props;
+---
+
+<dialog id="all-places-dialog" class="dialog dialog--list">
+  <button type="button" class="dialog__close" data-dialog-close aria-label="Close">&times;</button>
+  <h2>{heading}</h2>
+  <p class="dialog__description">{description}</p>
+  <ul class="place-list">
+    {
+      lieux.map((lieu) => (
+        <li>
+          <button type="button" class="place-list__item" data-lieu-trigger={lieu.id}>
+            <span class="place-list__title">{lieu.title}</span>
+            <span class="place-list__teaser">{lieu.teaser}</span>
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+</dialog>

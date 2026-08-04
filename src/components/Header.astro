@@ -1,0 +1,39 @@
+---
+import LangSwitcher from './LangSwitcher.astro';
+import type { Lang } from '../i18n/utils';
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  lang: Lang;
+  path?: string;
+  title: string;
+  kicker?: string;
+  breadcrumbs?: Crumb[];
+}
+
+const { lang, path = '', title, kicker, breadcrumbs } = Astro.props;
+---
+
+<div class="topbar">
+  <LangSwitcher lang={lang} path={path} />
+</div>
+<header class="header">
+  {kicker && <p class="kicker">{kicker}</p>}
+  <h1>{title}</h1>
+  {
+    breadcrumbs && breadcrumbs.length > 0 && (
+      <nav class="breadcrumbs">
+        {breadcrumbs.map((crumb, i) => (
+          <>
+            {crumb.href ? <a href={crumb.href}>{crumb.label}</a> : <span>{crumb.label}</span>}
+            {i < breadcrumbs.length - 1 && ' › '}
+          </>
+        ))}
+      </nav>
+    )
+  }
+</header>

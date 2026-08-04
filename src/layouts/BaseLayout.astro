@@ -1,0 +1,51 @@
+---
+import '../styles/global.scss';
+
+interface Theme {
+  from: string;
+  to: string;
+  accent: string;
+}
+
+interface Props {
+  lang: string;
+  title: string;
+  variant?: 'default' | 'home';
+  theme?: Theme;
+  noindex?: boolean;
+}
+
+const { lang, title, variant = 'default', theme, noindex = false } = Astro.props;
+
+const wrapperClass = variant === 'home' ? 'wrapper wrapper--home' : 'wrapper';
+const mainClass = variant === 'home' ? 'main main--home' : 'main';
+
+const themeStyle = theme
+  ? `--theme-from: ${theme.from}; --theme-to: ${theme.to}; --theme-accent: ${theme.accent};`
+  : '';
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,WONK@0,9..144,100..900,1;1,9..144,100..900,1&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class={`variant-${variant}`} style={themeStyle}>
+    <div class={wrapperClass} id="top">
+      <slot name="header" />
+      <main class={mainClass}>
+        <slot />
+      </main>
+      <slot name="footer" />
+    </div>
+  </body>
+</html>

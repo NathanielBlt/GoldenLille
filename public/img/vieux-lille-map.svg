@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 592" role="img" aria-label="Stylized map of Old Lille">
+  <rect width="840" height="592" fill="#f3e7c9" />
+
+  <!-- soft organic landmasses -->
+  <path
+    d="M120 90 C60 140 40 260 90 340 C120 400 100 460 150 500 C90 470 40 380 55 280 C65 190 90 120 120 90 Z"
+    fill="#aebd9c"
+    opacity="0.55"
+  />
+  <path
+    d="M760 430 C800 460 800 520 750 545 C700 570 640 560 610 520 C660 540 730 500 760 430 Z"
+    fill="#aebd9c"
+    opacity="0.5"
+  />
+
+  <!-- streets / canal, hand-drawn feel -->
+  <path d="M60 260 C220 300 320 190 420 200 C520 210 560 160 620 100" fill="none" stroke="#8a6a3f" stroke-width="2" stroke-linecap="round" />
+  <path d="M120 220 C260 260 300 340 400 360 C480 376 520 300 640 300" fill="none" stroke="#8a6a3f" stroke-width="3" stroke-linecap="round" />
+  <path d="M470 60 C560 90 620 150 610 220 C600 290 660 320 720 300" fill="none" stroke="#8a6a3f" stroke-width="1.5" stroke-linecap="round" opacity="0.8" />
+  <path d="M300 420 C400 470 480 430 560 460 C610 478 660 470 700 440" fill="none" stroke="#8a6a3f" stroke-width="2" stroke-linecap="round" opacity="0.8" />
+  <path d="M430 200 L430 480" fill="none" stroke="#8a6a3f" stroke-width="1.5" stroke-linecap="round" opacity="0.7" />
+
+  <!-- decorative dashed arc -->
+  <path d="M310 150 C360 120 430 120 470 150" fill="none" stroke="#8a6a3f" stroke-width="1.5" stroke-dasharray="2 8" stroke-linecap="round" opacity="0.6" />
+
+  <!-- building blocks -->
+  <rect x="330" y="230" width="60" height="46" fill="none" stroke="#8a6a3f" stroke-width="1.5" opacity="0.55" />
+  <rect x="470" y="220" width="50" height="60" fill="none" stroke="#8a6a3f" stroke-width="1.5" opacity="0.55" />
+  <rect x="470" y="300" width="46" height="46" fill="none" stroke="#8a6a3f" stroke-width="1.5" opacity="0.55" />
+  <rect x="560" y="270" width="56" height="46" fill="none" stroke="#8a6a3f" stroke-width="1.5" opacity="0.55" />
+  <rect x="300" y="330" width="60" height="50" fill="none" stroke="#8a6a3f" stroke-width="1.5" opacity="0.55" />
+  <rect x="380" y="330" width="52" height="50" fill="none" stroke="#8a6a3f" stroke-width="1.5" opacity="0.55" />
+  <rect x="510" y="380" width="60" height="46" fill="none" stroke="#8a6a3f" stroke-width="1.5" opacity="0.55" />
+  <rect x="600" y="400" width="56" height="60" fill="none" stroke="#8a6a3f" stroke-width="1.5" opacity="0.5" />
+</svg>

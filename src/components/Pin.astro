@@ -1,0 +1,21 @@
+---
+import { withBase } from '../utils/base';
+
+interface Props {
+  href: string;
+  lieuId: string;
+  top: number;
+  left: number;
+  title: string;
+}
+
+const { href, lieuId, top, left, title } = Astro.props;
+---
+
+<a
+  href={href}
+  data-lieu={lieuId}
+  class="pin"
+  style={`top: ${top}%; left: ${left}%; background-image: url(${withBase('img/pin.svg')});`}
+  title={title}
+></a>

@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import Ornament from '../Ornament.astro';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const quartiers = await getCollection('quartiers', (entry) => entry.id.startsWith(`${lang}/`));
+---
+
+<BaseLayout lang={lang} title={t('site_title')} variant="home">
+  <Header slot="header" lang={lang} title={t('site_title')} />
+
+  <p class="tagline">{t('tagline')}</p>
+  <Ornament />
+  <h2>{t('choose_area')}</h2>
+  <ul class="quartier-list">
+    {
+      quartiers.map((quartier) => {
+        const slug = quartier.id.split('/')[1];
+        return (
+          <li>
+            <a class="quartier-card" href={getRelativeLocaleUrl(lang, slug)}>
+              <span class="quartier-card__label">{quartier.data.title}</span>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  <Footer
+    slot="footer"
+    howItWorksHref={getRelativeLocaleUrl(lang, 'comment-ca-marche')}
+    howItWorksLabel={t('how_it_works')}
+  />
+</BaseLayout>

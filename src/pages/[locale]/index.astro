@@ -1,0 +1,13 @@
+---
+import HomePage from '../../components/pages/HomePage.astro';
+import type { Lang } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  const locales: Exclude<Lang, 'en'>[] = ['fr', 'nl'];
+  return locales.map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: Lang };
+---
+
+<HomePage lang={locale} />
