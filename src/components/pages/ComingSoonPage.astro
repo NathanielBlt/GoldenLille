@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import Ornament from '../Ornament.astro';
+import { useTranslations, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<BaseLayout lang={lang} title={t('site_title')} variant="home">
+  <Header slot="header" lang={lang} title={t('site_title')} />
+
+  <p class="tagline">{t('tagline')}</p>
+  <Ornament />
+  <p class="coming-soon-text">{t('coming_soon_text')}</p>
+
+  <Footer slot="footer" />
+</BaseLayout>
