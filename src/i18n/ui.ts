@@ -11,7 +11,7 @@ export const ui = {
     all_places_description: 'Choose a place to center the map on its pin.',
     view_full_card: 'View full card',
     map_hint: 'Drag to move, pinch or scroll to zoom.',
-    coming_soon_text: 'The site is being rebuilt. Come back soon.',
+    coming_soon_text: 'This site is under construction. Come back soon.',
   },
   fr: {
     site_title: 'Golden Lille',
@@ -23,7 +23,7 @@ export const ui = {
     all_places_description: "Choisissez un lieu pour recentrer la carte sur son épingle.",
     view_full_card: 'Voir la fiche complète',
     map_hint: 'Glissez pour déplacer, pincez ou molette pour zoomer.',
-    coming_soon_text: 'Le site est en reconstruction. Revenez bientôt.',
+    coming_soon_text: 'Ce site est en cours de construction. Revenez bientôt.',
   },
   nl: {
     site_title: 'Golden Lille',
@@ -35,6 +35,6 @@ export const ui = {
     all_places_description: 'Kies een plek om de kaart op die speld te centreren.',
     view_full_card: 'Bekijk de volledige kaart',
     map_hint: 'Sleep om te verplaatsen, knijp of scroll om te zoomen.',
-    coming_soon_text: 'De site wordt herbouwd. Kom binnenkort terug.',
+    coming_soon_text: 'Deze site is in aanbouw. Kom binnenkort terug.',
   },
 } as const;
